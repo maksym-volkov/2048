@@ -38,6 +38,6 @@ void		init_window(t_window *win_prop, WINDOW **win)
 	getmaxyx(stdscr, y, x);
 	// *win = newwin(win_prop->heigth, win_prop->width,
 			// win_prop->start_win.x, win_prop->start_win.y);
-	*win = newwin(y, x - CHAMPS_WIDTH, INFO_HEIGHT, CHAMPS_WIDTH);
+	*win = newwin(y, x, INFO_HEIGHT, CHAMPS_WIDTH);
 	// box(*win, 0, 0);
 }

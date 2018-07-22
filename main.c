@@ -111,11 +111,13 @@ int				main(void)
 	keypad(win, 1);
 	while ((key = wgetch(win)) != 27)
 	{
+		wclear(win);
 		drow_map(win);
-		update_help(win_info, win_champs);
 		print_numbers(win, numbers);
+		update_help(win_info, win_champs);
 		if (!(c = hook_keys(key, win, numbers)))
 			break ;
+		wrefresh(win);
 	}
 	// print_info(c, win_info);
 	wgetch(win);

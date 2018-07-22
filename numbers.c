@@ -48,6 +48,7 @@ void	print_numbers(WINDOW *win, int mas[4][4])
 	int		x;
 
 	i = -1;
+	// wclear(win);
 	getmaxyx(stdscr, y, x);
 	while (++i < 4)
 	{
@@ -58,5 +59,5 @@ void	print_numbers(WINDOW *win, int mas[4][4])
 				mvwprintw(win, ((y - 5) / 4) * j + y / 8, ((x - CHAMPS_WIDTH) / 4) * i + x / 8 - 5, "%5s", "");
 	}
 	mvwprintw(win, 0, 0, "%s", "");
-	wrefresh(win);
+	// wrefresh(win);
 }

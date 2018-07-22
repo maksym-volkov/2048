@@ -44,8 +44,9 @@ void	drow_map(WINDOW *win)
 	int y;
 	int count;
 
-	// getmaxyx(win, y, x);
 	getmaxyx(stdscr, y, x);
+	// wclear(win);
+	// getmaxyx(win, y, x);
 	wclear(win);
 	if (y < 10 || x < 33)
 	{
