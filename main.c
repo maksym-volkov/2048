@@ -74,8 +74,18 @@ void			print_info(short c, WINDOW *win_info)
 
 void			update_help(WINDOW *win_info, WINDOW *win_champs)
 {
+	int x;
+	int y;
+
+	wclear(win_info);
+	wclear(win_champs);
+	getmaxyx(stdscr, y, x);
+	wresize(win_info, 4, x - 1);
+	wresize(win_champs, y - 4, 20);
 	box(win_info, 0, 0);
 	box(win_champs, 0, 0);
+	wrefresh(win_info);
+	wrefresh(win_champs);
 }
 
 int				main(void)
