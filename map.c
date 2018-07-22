@@ -54,4 +54,5 @@ void	drow_map(WINDOW *win)
 	print_lines(win, y, x, count);
 	count = 0;
 	print_rows(win, y, x, count);
+	wrefresh(win);
 }
