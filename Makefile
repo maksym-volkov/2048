@@ -6,7 +6,7 @@
 #    By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/07 14:30:48 by dskrypny          #+#    #+#              #
-#    Updated: 2018/07/22 18:27:23 by dskrypny         ###   ########.fr        #
+#    Updated: 2018/07/22 21:01:21 by dskrypny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,5 +49,3 @@ gic:
 	cp *.c ~/rush_2048
 	cp header.h ~/rush_2048
 	cp Makefile ~/rush_2048
-	cp .gitignore ~/rush_2048
-	cp .ginignore

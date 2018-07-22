@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 11:15:43 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 18:37:22 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 21:00:52 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	add_number(int mas[4][4])
 	mas[num_pos / 4][num_pos % 4] = (rand() % 8 == 4) ? 4 : 2;
 }
 
-void	create_numbers(int mas[4][4], WINDOW *win)
+void	create_numbers(t_result *res)
 {
 	short	i;
 	short	j;
@@ -33,11 +33,14 @@ void	create_numbers(int mas[4][4], WINDOW *win)
 	{
 		j = -1;
 		while (++j < 4)
-			mas[i][j] = 0;
+			res->numbers[i][j] = 0;
 	}
-	add_number(mas);
-	add_number(mas);
-	print_numbers(win, mas);
+	add_number(res->numbers);
+	add_number(res->numbers);
+	res->won = 0;
+	res->result = 0;
+	print_numbers(res->win[0], res->numbers);
+	print_result(res);
 }
 
 void	print_numbers(WINDOW *win, int mas[4][4])

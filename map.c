@@ -6,11 +6,24 @@
 /*   By: mvolkov <mvolkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/05 17:02:54 by mvolkov           #+#    #+#             */
-/*   Updated: 2018/07/22 17:42:18 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 19:57:54 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+int			power_of_two(int x)
+{
+	if (x == 0)
+		return (0);
+	while (x != 1)
+	{
+		if(x % 2 != 0)
+			return (0);
+		x /= 2;
+	}
+	return (1);
+}
 
 void		update_map(WINDOW *win_info, WINDOW *win_champs)
 {
@@ -65,7 +78,7 @@ void		draw_map(WINDOW *win)
 	if (y < 18 || x < 65)
 	{
 		clear();
-		mvprintw(0, 0, "size ne ok");
+		mvprintw(0, 0, "too small");
 		while (y < 18 || x < 65)
 		{
 			refresh();
@@ -75,7 +88,6 @@ void		draw_map(WINDOW *win)
 	}
 	count = 0;
 	print_lines(win, y, x, count);
-	count = 0;
 	print_rows(win, y, x, count);
 	wrefresh(win);
 }
