@@ -6,13 +6,29 @@
 /*   By: mvolkov <mvolkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/05 17:02:54 by mvolkov           #+#    #+#             */
-/*   Updated: 2018/01/11 11:32:02 by mvolkov          ###   ########.fr       */
+/*   Updated: 2018/07/22 17:42:18 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	print_lines(WINDOW *win, int y, int x, int count)
+void		update_map(WINDOW *win_info, WINDOW *win_champs)
+{
+	int x;
+	int y;
+
+	wclear(win_info);
+	wclear(win_champs);
+	getmaxyx(stdscr, y, x);
+	wresize(win_info, INFO_HEIGHT, x - 1);
+	wresize(win_champs, y - INFO_HEIGHT, CHAMPS_WIDTH);
+	box(win_info, 0, 0);
+	box(win_champs, 0, 0);
+	wrefresh(win_info);
+	wrefresh(win_champs);
+}
+
+static void	print_lines(WINDOW *win, int y, int x, int count)
 {
 	while (count < (x - 1))
 	{
@@ -25,7 +41,7 @@ void	print_lines(WINDOW *win, int y, int x, int count)
 	}
 }
 
-void	print_rows(WINDOW *win, int y, int x, int count)
+static void	print_rows(WINDOW *win, int y, int x, int count)
 {
 	while (count < (y - 1))
 	{
@@ -38,19 +54,24 @@ void	print_rows(WINDOW *win, int y, int x, int count)
 	}
 }
 
-void	drow_map(WINDOW *win)
+void		draw_map(WINDOW *win)
 {
 	int x;
 	int y;
 	int count;
 
 	getmaxyx(stdscr, y, x);
-	// wclear(win);
-	// getmaxyx(win, y, x);
 	wclear(win);
-	if (y < 10 || x < 33)
+	if (y < 18 || x < 65)
 	{
-		// TOO SMALL WINDOW
+		clear();
+		mvprintw(0, 0, "size ne ok");
+		while (y < 18 || x < 65)
+		{
+			refresh();
+			getmaxyx(stdscr, y, x);
+		}
+		clear();
 	}
 	count = 0;
 	print_lines(win, y, x, count);

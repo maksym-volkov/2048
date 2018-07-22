@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 19:25:59 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 12:24:04 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 17:06:22 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static short	find_pair_down(int mas[4][4], int x, int y)
 	{
 		mas[x][y] *= 2;
 		mas[x][y - step] = 0;
-		return (1);
+		return (mas[x][y]);
 	}
 	return (0);
 }
 
-static void		push_all_down(int mas[4][4], short *x)
+static void		push_all_down(int mas[4][4], int *x)
 {
 	short	step;
 	short	i;
@@ -54,14 +54,14 @@ static void		push_all_down(int mas[4][4], short *x)
 	}
 }
 
-short		move_down(int mas[4][4])
+int				move_down(int mas[4][4], t_result *res)
 {
 	short	i;
 	short	j;
-	short	x;
+	int		x;
 
-	j = 4;
 	x = 0;
+	j = 4;
 	while (--j >= 0)
 	{
 		i = -1;
@@ -71,6 +71,8 @@ short		move_down(int mas[4][4])
 				x += find_pair_down(mas, i, j);
 		}
 	}
+	res->result += x;
 	push_all_down(mas, &x);
-	return (x > 0);
+	print_result(res);
+	return (x);
 }

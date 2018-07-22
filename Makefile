@@ -6,21 +6,22 @@
 #    By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/07 14:30:48 by dskrypny          #+#    #+#              #
-#    Updated: 2018/07/22 12:31:09 by dskrypny         ###   ########.fr        #
+#    Updated: 2018/07/22 18:27:23 by dskrypny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = game_2048
 
 SOURCE = main.c \
+		 map.c \
 		 move_up.c \
 		 move_down.c \
 		 move_left.c \
 		 move_right.c \
 		 numbers.c \
+		 result.c \
 		 window_init.c \
-		 map.c
-		 
+
 FLAGS = -Wall -Wextra -Werror
 
 LIB = libft/libft.a
@@ -43,3 +44,10 @@ fclean: clean
 	@echo "all cleaned"
 
 re: fclean all
+
+gic:
+	cp *.c ~/rush_2048
+	cp header.h ~/rush_2048
+	cp Makefile ~/rush_2048
+	cp .gitignore ~/rush_2048
+	cp .ginignore

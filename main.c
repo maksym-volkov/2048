@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 09:57:26 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 12:38:27 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 18:26:51 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static int		end_game(int numbers[4][4])
 {
-	short i;
-	short j;
-	short count;
-	short max;
+	short			i;
+	short			j;
+	short			count;
+	short			max;
 
 	count = 0;
 	max = 0;
@@ -28,99 +28,109 @@ static int		end_game(int numbers[4][4])
 		while (++j < 4)
 		{
 			if (numbers[i][j] != 0)
-				count++;
+				count += check_number(numbers, i, j);
 			if (numbers[i][j] > max)
 				max = numbers[i][j];
 		}
 	}
 	if (count == 16)
-		return (1);
-	if (max == END_GAME)
+		return (3);
+	if (max == WIN_VALUE)
 		return (2);
 	return (0);
 }
 
-static int		hook_keys(int key, WINDOW *win, int numbers[4][4])
+static int		hook_keys(int key, t_result *res, int numbers[4][4],
+		int reserve[4][4])
 {
-	short	res;
+	int		result;
+	short	end;
 
-	res = 1;
-	if (end_game(numbers))
-		return (0);
+	result = 1;
 	if (key == KEY_UP)
-		res = move_up(numbers);
+		result = move_up(numbers, res);
 	else if (key == KEY_DOWN)
-		res = move_down(numbers);
+		result = move_down(numbers, res);
 	else if (key == KEY_LEFT)
-		res = move_left(numbers);
+		result = move_left(numbers, res);
 	else if (key == KEY_RIGHT)
-		res = move_right(numbers);
+		result = move_right(numbers, res);
+	else if (key == 117)
+		copy_numbers(reserve, numbers);
 	else
 		return (1);
-	if (res)
+	if (result && key != 117)
 		add_number(numbers);
-	print_numbers(win, numbers);
+	print_numbers(res->win[0], numbers);
+	if ((end = end_game(numbers)))
+		return (end);
 	return (1);
 }
 
-void			print_info(short c, WINDOW *win_info)
+static int		print_info(short c, t_result *res)
 {
-	if (c == 0)
-		mvwprintw(win_info, 1, 5, "Game Over");
+	int	key;
+
+	if (c == 3)
+		mvwprintw(res->win[1], 1, 3, "Game Over");
+	if (c == 2 && !res->won)
+	{
+		mvwprintw(res->win[1], 1, 3, "Well done!");
+		res->won = 1;
+	}
 	if (c == 1)
-		mvwprintw(win_info, 1, 5, "Goodbye");
-	wrefresh(win_info);
+		mvwprintw(res->win[1], 1, 3, "Goodbye");
+	wrefresh(res->win[1]);
+	if (c == 1)
+		return (0);
+	keypad(res->win[1], 1);
+	key = wgetch(res->win[1]);
+	while (key != 27 && key != 114)
+		key = wgetch(res->win[1]);
+	return (key);
 }
 
-void			update_help(WINDOW *win_info, WINDOW *win_champs)
+static void		doing(t_result res)
 {
-	int x;
-	int y;
+	int			numbers[4][4];
+	int			reserve[4][4];
+	int			key;
+	short		c;
 
-	wclear(win_info);
-	wclear(win_champs);
-	getmaxyx(stdscr, y, x);
-	wresize(win_info, INFO_HEIGHT, x - 1);
-	wresize(win_champs, y - INFO_HEIGHT, CHAMPS_WIDTH);
-	box(win_info, 0, 0);
-	box(win_champs, 0, 0);
-	wrefresh(win_info);
-	wrefresh(win_champs);
+	res.won = 0;
+	res.result = 0;
+	create_numbers(numbers, res.win[0]);
+	keypad(res.win[0], 1);
+	print_result(&res);
+	while ((key = wgetch(res.win[0])) != 27)
+	{
+		draw_map(res.win[0]);
+		update_map(res.win[1], res.win[2]);
+		print_numbers(res.win[0], numbers);
+		print_result(&res);
+		if ((c = hook_keys(key, &res, numbers, reserve)) != 1)
+			break ;
+	}
+	key = print_info(c, &res);
+	if (key == 114)
+		doing(res);
 }
 
 int				main(void)
 {
-	WINDOW		*win;
-	WINDOW		*win_info;
-	WINDOW		*win_champs;
-	t_window	win_prop;
-	int			numbers[4][4];
-	int			key;
+	t_result	res;
 	short		c;
 
 	initscr();
 	cbreak();
 	noecho();
-	win = NULL;
-	win_info = NULL;
-	win_champs = NULL;
-	init_window(&win_prop, &win);
-	init_help(&win_info, &win_champs);
-	drow_map(win);
-	create_numbers(numbers, win);
-	keypad(win, 1);
-	while ((key = wgetch(win)) != 27)
-	{
-		wclear(win);
-		drow_map(win);
-		print_numbers(win, numbers);
-		update_help(win_info, win_champs);
-		if (!(c = hook_keys(key, win, numbers)))
-			break ;
-		wrefresh(win);
-	}
-	// print_info(c, win_info);
-	wgetch(win);
+	c = -1;
+	while (++c < 3)
+		res.win[c] = NULL;
+	res.log = reader();
+	init_window(&res.win[0], &res.win[1], &res.win[2]);
+	draw_map(res.win[0]);
+	doing(res);
 	endwin();
 	system("leaks game_2048");
 	return (0);
