@@ -30,10 +30,10 @@ void	print_rows(WINDOW *win, int y, int x, int count)
 	while (count < (y - 1))
 	{
 		mvwprintw(win, count, 0, "|");
-		mvwprintw(win, count, x / 4, "|");
-		mvwprintw(win, count, (x / 4) * 2, "|");
-		mvwprintw(win, count, (x / 4) * 3, "|");
-		mvwprintw(win, count, x - 1, "|");
+		mvwprintw(win, count, (x - 20) / 4, "|");
+		mvwprintw(win, count, ((x - 20) / 4) * 2, "|");
+		mvwprintw(win, count, ((x - 20) / 4) * 3, "|");
+		mvwprintw(win, count, x - 21, "|");
 		count++;
 	}
 }
@@ -44,7 +44,8 @@ void	drow_map(WINDOW *win)
 	int y;
 	int count;
 
-	getmaxyx(win, y, x);
+	// getmaxyx(win, y, x);
+	getmaxyx(stdscr, y, x);
 	if (y < 10 || x < 33)
 	{
 		// TOO SMALL WINDOW
