@@ -12,6 +12,29 @@
 
 #include "header.h"
 
+void	ft_error(char *error)
+{
+	ft_printf(error);
+	exit(1);
+}
+
+char	*read_name()
+{
+	char *line;
+
+	line = NULL;
+	while (!line || !line[0])
+	{
+		ft_printf("Enter Your name: ");
+		if (get_next_line(0, &line) <= 0)
+			ft_error("Reading error\n");
+		if (line[0])
+			return (line);
+		free(line);
+	}
+	return (NULL);
+}
+
 void	print_result(t_result *res)
 {
 	int		i;

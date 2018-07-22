@@ -126,10 +126,8 @@ int				main(void)
 	short		c;
 
 	if (WIN_VALUE < 0 || WIN_VALUE > 16384 || !power_of_two(WIN_VALUE))
-	{
-		ft_printf("Invalided number\n");
-		exit(1);
-	}
+		ft_error("Invalided number\n");
+	res.name = read_name();
 	initscr();
 	cbreak();
 	noecho();

@@ -6,71 +6,79 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 15:06:01 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/04/17 09:10:50 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 19:27:51 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	int		ft_count(char const *s, char c)
+static	char	*split2(const char *s, int i, const char c)
 {
-	int i;
-	int count;
+	int		k;
+	char	*str;
 
-	i = 0;
-	count = 0;
-	while (s[i] == c)
-		i++;
-	while (s[i])
+	i--;
+	k = 0;
+	k = i;
+	while (s[k] != c && k != -1)
+		k--;
+	if (!(str = (char*)malloc(sizeof(*s) * (i - k + 1))))
+		return (NULL);
+	while (s[i] != c && i != -1)
+		i--;
+	i++;
+	k = 0;
+	while (s[i] != c && s[i] != '\0')
 	{
-		while (s[i] != c && s[i])
-			i++;
-		count++;
-		while (s[i] == c && s[i])
-			i++;
+		str[k] = s[i];
+		i++;
+		k++;
 	}
-	return (count);
+	str[k] = '\0';
+	return (str);
 }
 
-static int		ft_fill(char *res, const char *s, int i, int size)
+static	size_t	ft_len(const char *str, char const c)
 {
-	int j;
+	size_t i;
+	size_t l;
 
-	j = 0;
-	while (j < size)
+	i = 0;
+	l = 0;
+	while (str[i])
 	{
-		res[j] = s[i + j];
-		j++;
+		while (str[i] == c && str[i] != '\0')
+			i++;
+		while (str[i] != c && str[i] != '\0')
+			i++;
+		l++;
 	}
-	res[j] = '\0';
-	return (1);
+	return (l);
 }
 
 char			**ft_strsplit(char const *s, char c)
 {
-	char	**res;
-	int		i;
-	int		k;
-	int		size;
+	size_t	i;
+	size_t	j;
+	char	**str;
 
-	if (!(res = (char **)malloc(sizeof(char *) + (ft_count(s, c) + 1))))
+	if (s == NULL)
 		return (NULL);
-	k = 0;
+	if (!(str = (char**)malloc(sizeof(*str) * (ft_len(s, c) + 1))))
+		return (NULL);
 	i = 0;
-	while (k < ft_count(s, c))
+	j = 0;
+	while (s[i] != '\0')
 	{
-		if (s[i] == c)
+		while (s[i] == c && s[i] != '\0')
 			i++;
-		else
-		{
-			size = 0;
-			while (s[i + size] != c && s[i + size])
-				size++;
-			res[k] = (char *)malloc(sizeof(char) * (size + 1));
-			k += ft_fill(res[k], s, i, size);
-			i += size;
-		}
+		while (s[i] != c && s[i] != '\0')
+			i++;
+		if (s[i] == '\0' && s[i - 1] == c)
+			break ;
+		str[j] = split2(s, i, c);
+		j++;
 	}
-	res[k] = NULL;
-	return (res);
+	str[j] = NULL;
+	return (str);
 }

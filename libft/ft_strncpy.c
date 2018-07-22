@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 21:44:24 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/06/24 18:30:33 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 19:12:27 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*ft_strncpy(char *dst, const char *src, size_t len)
 		dst[i] = src[i];
 		i++;
 	}
+	dst[i] = '\0';
 	while (i < len)
 	{
 		dst[i] = '\0';

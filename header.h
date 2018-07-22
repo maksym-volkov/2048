@@ -33,9 +33,12 @@ typedef struct	s_result
 	WINDOW		*win[3];
 	int			result;
 	char		won;
+	char		*name;
 }				t_result;
 
 char			**reader(void);
+char			*read_name();
+void			ft_error(char *error);
 
 void			add_number(int mas[4][4]);
 void			create_numbers(t_result *res);
