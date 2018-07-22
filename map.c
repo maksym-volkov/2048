@@ -17,10 +17,10 @@ void	print_lines(WINDOW *win, int y, int x, int count)
 	while (count < (x - 1))
 	{
 		mvwprintw(win, 0, count, "-");
-		mvwprintw(win, y / 4, count, "-");
-		mvwprintw(win, (y / 4) * 2, count, "-");
-		mvwprintw(win, (y / 4) * 3, count, "-");
-		mvwprintw(win, y - 1, count, "-");
+		mvwprintw(win, (y - 5) / 4, count, "-");
+		mvwprintw(win, ((y - 5) / 4) * 2, count, "-");
+		mvwprintw(win, ((y - 5) / 4) * 3, count, "-");
+		mvwprintw(win, y - 5, count, "-");
 		count++;
 	}
 }

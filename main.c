@@ -72,6 +72,12 @@ void			print_info(short c, WINDOW *win_info)
 	wrefresh(win_info);
 }
 
+void			update_help(WINDOW *win_info, WINDOW *win_champs)
+{
+	box(win_info, 0, 0);
+	box(win_champs, 0, 0);
+}
+
 int				main(void)
 {
 	WINDOW		*win;
@@ -97,6 +103,7 @@ int				main(void)
 	{
 		wclear(win);
 		drow_map(win);
+		update_help(win_info, win_champs);
 		print_numbers(win, numbers);
 		if (!(c = hook_keys(key, win, numbers)))
 			break ;

@@ -21,7 +21,7 @@ void		init_help(WINDOW **win_info, WINDOW **win_champs)
 	*win_info = newwin(4, x - 1, 0, 0);
 	box(*win_info, 0, 0);
 	wrefresh(*win_info);
-	*win_champs = newwin(y - 4, x - 1, 4, x - 20);
+	*win_champs = newwin(y - 4, 20, 4, x - 20);
 	box(*win_champs, 0, 0);
 	wrefresh(*win_champs);
 }

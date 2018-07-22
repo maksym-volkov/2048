@@ -54,8 +54,8 @@ void	print_numbers(WINDOW *win, int mas[4][4])
 		j = -1;
 		while (++j < 4)
 			(mas[i][j]) ?
-				mvwprintw(win, (y / 4) * j + y / 8, (x / 4) * i + x / 8 - 2, " %4d", mas[i][j]) :
-				mvwprintw(win, (y / 4) * j + y / 8, (x / 4) * i + x / 8 - 2, "%5s", "");
+				mvwprintw(win, ((y - 5) / 4) * j + y / 8, (x / 4) * i + x / 8 - 2, " %4d", mas[i][j]) :
+				mvwprintw(win, ((y - 5) / 4) * j + y / 8, (x / 4) * i + x / 8 - 2, "%5s", "");
 	}
 	mvwprintw(win, 0, 0, "%s", "");
 	wrefresh(win);
