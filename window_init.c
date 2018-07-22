@@ -18,10 +18,10 @@ void		init_help(WINDOW **win_info, WINDOW **win_champs)
 	int y;
 
 	getmaxyx(stdscr, y, x);
-	*win_info = newwin(4, x - 1, 0, 0);
+	*win_info = newwin(INFO_HEIGHT, x - 1, 0, 0);
 	box(*win_info, 0, 0);
 	wrefresh(*win_info);
-	*win_champs = newwin(y - 4, 20, 4, 0);
+	*win_champs = newwin(y - INFO_HEIGHT, CHAMPS_WIDTH, 4, 0);
 	box(*win_champs, 0, 0);
 	wrefresh(*win_champs);
 }
@@ -38,6 +38,6 @@ void		init_window(t_window *win_prop, WINDOW **win)
 	getmaxyx(stdscr, y, x);
 	// *win = newwin(win_prop->heigth, win_prop->width,
 			// win_prop->start_win.x, win_prop->start_win.y);
-	*win = newwin(y, x - 20, 4, 20);
+	*win = newwin(y, x - CHAMPS_WIDTH, INFO_HEIGHT, CHAMPS_WIDTH);
 	// box(*win, 0, 0);
 }

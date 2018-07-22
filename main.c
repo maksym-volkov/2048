@@ -80,8 +80,8 @@ void			update_help(WINDOW *win_info, WINDOW *win_champs)
 	wclear(win_info);
 	wclear(win_champs);
 	getmaxyx(stdscr, y, x);
-	wresize(win_info, 4, x - 1);
-	wresize(win_champs, y - 4, 20);
+	wresize(win_info, INFO_HEIGHT, x - 1);
+	wresize(win_champs, y - INFO_HEIGHT, CHAMPS_WIDTH);
 	box(win_info, 0, 0);
 	box(win_champs, 0, 0);
 	wrefresh(win_info);
@@ -111,7 +111,6 @@ int				main(void)
 	keypad(win, 1);
 	while ((key = wgetch(win)) != 27)
 	{
-		wclear(win);
 		drow_map(win);
 		update_help(win_info, win_champs);
 		print_numbers(win, numbers);

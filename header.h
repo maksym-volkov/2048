@@ -18,6 +18,8 @@
 # include <time.h>
 
 # define END_GAME 2048
+# define INFO_HEIGHT 4
+# define CHAMPS_WIDTH 30
 
 typedef struct	s_point
 {
