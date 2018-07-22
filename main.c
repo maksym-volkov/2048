@@ -75,8 +75,8 @@ void			print_info(short c, WINDOW *win_info)
 int				main(void)
 {
 	WINDOW		*win;
-	// WINDOW		*win_info;
-	// WINDOW		*win_champs;
+	WINDOW		*win_info;
+	WINDOW		*win_champs;
 	t_window	win_prop;
 	int			numbers[4][4];
 	int			key;
@@ -86,10 +86,10 @@ int				main(void)
 	cbreak();
 	noecho();
 	win = NULL;
-	// win_info = NULL;
-	// win_champs = NULL;
+	win_info = NULL;
+	win_champs = NULL;
 	init_window(&win_prop, &win);
-	// init_help(&win_info, &win_champs);
+	init_help(&win_info, &win_champs);
 	drow_map(win);
 	create_numbers(numbers, win);
 	keypad(win, 1);
